@@ -1,49 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
     <style>
-        .todo_list{
-        border:2px solid rgb(0, 0, 204);
-        margin:5px;
-        padding:5px 10px;
-        border-radius: 5px;
-        background-color: rgb(204, 204, 255);
-        color:rgb(0, 0, 204);
-        font-size: 20px;
+        .todo_list {
+            border: 2px solid rgb(0, 0, 204);
+            margin: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: rgb(204, 204, 255);
+            color: rgb(0, 0, 204);
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .del-butn{
+            background-color: tomato;
+            color:white;
+            font-size: 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            height:20px;
+
         }
     </style>
 </head>
+
 <body>
     <h2>ToDo App</h2>
 
     <div class="lists_container" id="lists_container">
 
     </div>
+    <div>
+        <input type="text" id="task-input" placeholder="Enter a task"/>
+        <button type="button" onclick="addTask()">
+         Add Task
+        </button>
+    </div>
 
     <script>
-        const tasks = [
-            "buy a book",
-            "js concept rivision",
-            "take a medicion",
-            "buy a vegetables"
-        ];
+        const tasks = [];
 
-        function loadTasks(){
-        const taskContainer = document.getElementById("lists_container");
-        taskContainer.innerHTML = '';
-        
-        for(const task of tasks){
-            taskContainer.innerHTML += `
+        function loadFromLocalStorage(){
+            const allTasks = JSON.parse(localStorage.getItem('allTasks'));
+
+            if(allTasks){
+                tasks.push(...allTasks);
+            }
+            loadTasks();
+        }
+        loadFromLocalStorage();
+
+        function loadTasks() {
+
+           localStorage.setItem('allTasks',JSON.stringify(tasks));
+
+            const taskContainer = document.getElementById("lists_container");
+            taskContainer.innerHTML = '';
+
+            for (const task of tasks) {
+                taskContainer.innerHTML += `
            <div class="todo_list">
             ${task}
+            <button type="button" class="del-butn" onclick="deleteTask('${task}')">
+                Delete
+            </button>
             </div> 
             `
+            }
         }
+       
+
+        function deleteTask(task){
+            const taskIndex = tasks.indexOf(task);
+            tasks.slice(taskIndex,1);
+            loadTasks();
         }
-        loadTasks();
+
+        function addTask(){
+            const taskElement = document.getElementById('task-input');
+            const task = taskElement.value;
+            if(!task){
+                alert('Please Enter a task');
+                return;
+            }
+
+            tasks.push(task);
+            loadTasks();
+            taskElement.value = '';
+        }
+        
     </script>
 </body>
+
 </html>
