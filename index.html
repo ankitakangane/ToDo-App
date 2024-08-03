@@ -7,5 +7,32 @@
 </head>
 <body>
     <h2>ToDo App</h2>
+
+    <div class="lists_container" id="lists_container">
+
+    </div>
+
+    <script>
+        const tasks = [
+            "buy a book",
+            "js concept rivision",
+            "take a medicion",
+            "buy a vegetables"
+        ];
+
+        function loadTasks(){
+        const taskContainer = document.getElementById("lists_container");
+        taskContainer.innerHTML = '';
+        
+        for(const task of tasks){
+            taskContainer.innerHTML += `
+           <div>
+            ${task}
+            </div> 
+            `
+        }
+        }
+        loadTasks();
+    </script>
 </body>
 </html>
