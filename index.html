@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
+    <style>
+        .todo_list{
+        border:2px solid rgb(0, 0, 204);
+        margin:5px;
+        padding:5px 10px;
+        border-radius: 5px;
+        background-color: rgb(204, 204, 255);
+        color:rgb(0, 0, 204);
+        font-size: 20px;
+        }
+    </style>
 </head>
 <body>
     <h2>ToDo App</h2>
@@ -26,7 +37,7 @@
         
         for(const task of tasks){
             taskContainer.innerHTML += `
-           <div>
+           <div class="todo_list">
             ${task}
             </div> 
             `
